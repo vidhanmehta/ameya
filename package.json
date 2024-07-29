@@ -1,0 +1,34 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "build": "tsc",
+    "swagger-autogen": "node ./docs/swagger.js",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push"
+  },
+  "author": "Pragyam Soni",
+  "license": "ISC",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.4",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.22.8",
+    "drizzle-orm": "^0.31.2",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.4",
+    "swagger-autogen": "^2.23.7",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
