@@ -7,7 +7,7 @@ const router = express.Router()
 router.put('/:id',verifyDoctorOperator, updateAssesment)
 router.delete('/:id',verifyDoctorOperator, deleteAssesment)
 router.get('/:id',verifyToken, getAssesment)
-router.get('/',verifyToken, getUserAssesment)
+router.get('/user/:id',verifyToken, getUserAssesment)
 router.post('/',verifyDoctorOperator, createAssesment)
 
 export default router
