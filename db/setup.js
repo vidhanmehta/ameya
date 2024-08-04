@@ -1,7 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import dotenv from 'dotenv';
-import { assessment, assessmentRelations, device, deviceRelations, remarks, remarksRelations, reminder, reminderRelations, accountAccess, test, testRelations, user, userRelations, accountRelations } from './schema.js';
+import { assessment, assessmentRelations, device, deviceRelations, remarks, remarksRelations, reminder, reminderRelations, accountAccess, test, testRelations, user, userRelations, accountRelations, queueRelations } from './schema.js';
 
 dotenv.config();
 
@@ -24,6 +24,7 @@ if (!process.env.DATABASE_URL) {
             deviceRelations,
             reminderRelations,
             remarksRelations,
-            accountRelations
+            accountRelations,
+            queueRelations
         }
     });

@@ -84,6 +84,7 @@ export const user = pgTable("user", {
     id: serial("id").primaryKey(),
     userId: integer("userId").notNull().references(() => user.id),
     deviceId: integer("deviceId").notNull().references(() => device.id, {onDelete: "cascade"}),
+    assessmentId: integer("assessmentId").notNull().references(() => assessment.id, {onDelete: "cascade"}),
     posture: posture("posture").notNull(),
     hand: hand("hand").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
@@ -113,6 +114,10 @@ export const user = pgTable("user", {
     test: many(test),
     reminder: many(reminder),
     remarks: many(remarks),
+    queue: one(queue, {
+      fields: [assessment.id],
+      references: [queue.assessmentId],
+    })
   }))
 
   export const testRelations = relations(test, ({one, many}) => ({
@@ -152,6 +157,13 @@ export const user = pgTable("user", {
     assessment: one(assessment, {
       fields: [remarks.userId],
       references: [user.id],
+    }),
+  }))
+
+  export const queueRelations = relations(queue, ({one, many}) => ({
+    assessment: one(assessment, {
+      fields: [queue.assessmentId],
+      references: [assessment.id],
     }),
   }))
 

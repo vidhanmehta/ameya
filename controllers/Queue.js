@@ -64,3 +64,12 @@ export const getDeviceQueue = async(req,res,next)=>{
         next(err)
     }
 }
+
+export const getAssessmentQueue = async(req,res,next)=>{
+    try{
+        const getAllQueue = await db.select().from(queue).where(eq(queue.assId, req.params.id))
+        res.status(200).json(getAllQueue)
+    }catch(err){
+        next(err)
+    }
+}
