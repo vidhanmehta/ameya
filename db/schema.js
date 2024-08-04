@@ -56,7 +56,7 @@ export const user = pgTable("user", {
     deviceId: integer("deviceId").notNull().references(() => device.id),
     posture: posture("posture").notNull(),
     type: assestmentType("type").notNull(),
-    status: status("status").notNull().default("Active"),
+    status: status("status").default("Active"),
     createdAt: timestamp("createdAt").defaultNow(),
   })
 
