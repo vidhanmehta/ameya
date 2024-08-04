@@ -7,6 +7,7 @@ export const hand = pgEnum("hand", ["Left","Right"])
 export const posture = pgEnum("posture", ["Full Body Weight", "Full Arm Weight", "Forward Loading", "Backward Off Loading", "Side Loading", "Side Off Loading", "sitting" ])
 export const assestmentType = pgEnum("assestmentType", ["Weekly", "Monthly", "Daily"])
 export const roleType = pgEnum("roleType", ["Admin", "User", "Doctor", "Operator"])
+export const status = pgEnum("status", ["Active", "Completed"])
 
 export const user = pgTable("user", {
     id: serial("id").primaryKey(),
@@ -55,6 +56,7 @@ export const user = pgTable("user", {
     deviceId: integer("deviceId").notNull().references(() => device.id),
     posture: posture("posture").notNull(),
     type: assestmentType("type").notNull(),
+    status: status("status").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
   })
 
