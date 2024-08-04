@@ -7,10 +7,6 @@ import jwt from 'jsonwebtoken';
 
 export const createUser = async (req, res, next) => {
 
-     /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
-
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
@@ -31,7 +27,6 @@ export const getUser = async (req, res, next) => {
             "bearerAuth": []
     }] */
 
-    console.log('hi')
     try {
         const getUser = await db.query.user.findFirst({
             where: eq(user.email, req.body.email),

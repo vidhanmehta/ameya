@@ -154,3 +154,4 @@ export const user = pgTable("user", {
       references: [user.id],
     }),
   }))
+

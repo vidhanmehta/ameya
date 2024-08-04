@@ -9,7 +9,7 @@
       "email": "business@antrikshlabs.com"
     }
   },
-  "host": "https://ameya-api.onrender.com/",
+  "host": "ameya-backend.onrender.com/",
   "basePath": "/",
   "tags": [
     {
