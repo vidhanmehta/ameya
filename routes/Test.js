@@ -10,5 +10,6 @@ router.get('/:id', getTest)
 router.get('/assessment/:id', getAllAssesmentTest)
 router.get('/user/:id', getAllUserTest)
 router.post('/', createTest)
+router.get('/hands/:id')
 
 export default router

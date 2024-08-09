@@ -47,6 +47,7 @@ export const user = pgTable("user", {
   export const device = pgTable("device",{
     id: serial("id").primaryKey(),
     userId: integer("userId").notNull().references(() => user.id, {onDelete: "cascade"}),
+    deviceCode: varchar("deviceCode").notNull().unique(),
     createdAt: timestamp("createdAt").defaultNow(),
   })
 

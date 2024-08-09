@@ -64,3 +64,33 @@ export const getAllUserTest = async(req,res,next)=>{
         next(err)
     }
 }
+
+export const getHandTest = async(req, res, next)=>{
+    try{
+        const latestRightHandTest = await db
+        .select()
+        .from(test)
+        .where(
+            eq(test.userId, req.params.id), // Filter by userId
+            eq(test.hand, 'Right')   // Filter by right hand
+        )
+        .orderBy(desc(testTable.createdAt)) // Order by latest first
+        .limit(1); // Get the most recent test
+
+        // Fetch the latest left hand test for the user
+        const latestLeftHandTest = await db
+        .select()
+        .from(test)
+        .where(
+            eq(test.userId, req.params.id), // Filter by userId
+            eq(test.hand, 'Reft')    // Filter by left hand
+        )
+        .orderBy(desc(test.createdAt)) // Order by latest first
+        .limit(1); // Get the most recent test
+
+        res.status(200).json({"Left": latestLeftHandTest, "Right": latestRightHandTest})
+
+    }catch(err){
+        next(err)
+    }
+}

@@ -57,6 +57,20 @@
       "when": 1722808315416,
       "tag": "0007_cultured_black_bolt",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1722813298737,
+      "tag": "0008_tiny_nocturne",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1723232576401,
+      "tag": "0009_hot_mongu",
+      "breakpoints": true
     }
   ]
 }
