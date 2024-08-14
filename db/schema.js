@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, varchar, numeric, date, timestamp, pgEnum, integer, time} from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, numeric, date, timestamp, pgEnum, integer, time, uuid} from "drizzle-orm/pg-core";
 import { generator } from "../utils/numberGenerator.js";
 
 export const gender = pgEnum("gender", ["Male","Female","Others"])
@@ -27,7 +27,7 @@ export const user = pgTable("user", {
     knuckles_length: numeric("knuckles_length"),
     dominant_hand: hand("dominant_hand").notNull(),
     gender: gender("gender").notNull(),
-    access_code: numeric("access_code").default(generator.generate()),
+    accessCode: uuid("accessCode").defaultRandom(),
     role: roleType('role').default("User"),
     createdAt: timestamp("createdAt").defaultNow(),
     // assessment
