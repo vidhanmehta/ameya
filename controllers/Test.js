@@ -49,7 +49,7 @@ export const getTest = async (req,res,next)=>{
 
 export const getAllAssesmentTest = async(req,res,next)=>{
     try{
-        const getAllTest = await db.select().from(test).where(eq(test.assessmentId, req.params.id))
+        const getAllTest = await db.select().from(test).where(eq(test.assesmentId, req.params.id))
         res.status(200).json(getAllTest)
     }catch(err){
         next(err)
