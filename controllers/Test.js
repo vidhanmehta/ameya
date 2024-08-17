@@ -74,7 +74,7 @@ export const getHandTest = async(req, res, next)=>{
             eq(test.userId, req.params.id), // Filter by userId
             eq(test.hand, 'Right')   // Filter by right hand
         )
-        .orderBy(desc(testTable.createdAt)) // Order by latest first
+        .orderBy(desc(test.createdAt)) // Order by latest first
         .limit(1); // Get the most recent test
 
         // Fetch the latest left hand test for the user
