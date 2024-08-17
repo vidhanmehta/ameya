@@ -1,0 +1,1 @@
+ALTER TABLE "device" ALTER COLUMN "deviceName" SET DATA TYPE varchar(256);

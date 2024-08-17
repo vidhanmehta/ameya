@@ -12,7 +12,7 @@ export const updateDevice =async(req,res,next)=>{
 }
 
 export const createDevice = async(req,res,next)=>{
-    console.log("creating device")
+    console.log("creating device", req.body)
     try{
         const createdDevice = await db.insert(device).values(req.body).returning()
         res.status(200).json(createdDevice)

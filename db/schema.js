@@ -1,6 +1,5 @@
 import { relations } from "drizzle-orm";
 import { pgTable, serial, varchar, numeric, date, timestamp, pgEnum, integer, time, uuid} from "drizzle-orm/pg-core";
-import { generator } from "../utils/numberGenerator.js";
 
 export const gender = pgEnum("gender", ["Male","Female","Others"])
 export const hand = pgEnum("hand", ["Left","Right"])
@@ -47,6 +46,7 @@ export const user = pgTable("user", {
   export const device = pgTable("device",{
     id: serial("id").primaryKey(),
     userId: integer("userId").notNull().references(() => user.id, {onDelete: "cascade"}),
+    deviceName: varchar("deviceName", { length: 256 }).notNull(),
     deviceCode: varchar("deviceCode").notNull().unique(),
     createdAt: timestamp("createdAt").defaultNow(),
   })
@@ -76,9 +76,9 @@ export const user = pgTable("user", {
     deviceId: integer("deviceId").notNull().references(() => device.id),
     assestmentId: integer("assestmentId").notNull().references(() => assessment.id, {onDelete: "cascade"}),
     posture: posture("posture").notNull(),
-    trial1: integer("trial1").notNull(),
-    trial2: integer("trial2").notNull(),
-    trial3: integer("trial3").notNull(),
+    trial1: numeric("trial1").notNull(),
+    trial2: numeric("trial2").notNull(),
+    trial3: numeric("trial3").notNull(),
     hand: hand("hand").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
   })
