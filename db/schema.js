@@ -101,6 +101,11 @@ export const user = pgTable("user", {
     createdAt: timestamp("createdAt").defaultNow(),
   })
 
+  export const DeviceQueue = pgTable("deviceQueue", {
+    id: serial("id").primaryKey(),
+    deviceCode: uuid("accessCode").defaultRandom(),
+  })
+
   export const userRelations = relations(user, ({one, many}) => ({
     device: many(device),
     assessment: many(assessment),
