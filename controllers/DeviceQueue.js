@@ -47,3 +47,19 @@ export const getQueue = async (req,res,next)=>{
     }
 }
 
+export const getAllQueue = async (req,res,next)=>{
+    try{
+        // const gotQueue = await db.select().from(Queue).leftJoin(FamilyMember, eq(req.params.id, FamilyMember.QueueId))
+        const gotQueue = await db.query.DeviceQueue.findMany()
+
+        if (!gotQueue) {
+            return res.status(404).json({ message: "Queue not found" });
+        }
+
+        res.status(200).json(gotQueue)
+    }catch(err){
+        console.error("Error in getQueue:", err);
+        next(err)
+    }
+}
+
