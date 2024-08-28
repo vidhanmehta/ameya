@@ -71,8 +71,8 @@ export const getHandTest = async(req, res, next)=>{
         .select()
         .from(test)
         .where(
-            eq(test.userId, req.params.id), // Filter by userId
-            eq(test.hand, 'Right')   // Filter by right hand
+            eq(test.hand, 'Right'),
+            eq(test.userId, req.params.id) // Filter by userId
         )
         .orderBy(desc(test.createdAt)) // Order by latest first
         .limit(1); // Get the most recent test
