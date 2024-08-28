@@ -1,6 +1,7 @@
 import {user} from '../db/schema.js';
 import { db } from '../db/setup.js';
 import { eq } from 'drizzle-orm';
+import bcrypt from 'bcryptjs';
 
 export const updateUser =async(req,res,next)=>{
     try{
@@ -51,6 +52,19 @@ export const getAllUser = async(req,res,next)=>{
     try{
         const getAllUser = await db.select().from(user)
         res.status(200).json(getAllUser)
+    }catch(err){
+        next(err)
+    }
+}
+
+export const updateUserPassword = async(req,res,next)=>{
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password, salt);
+
+    try{
+        const updatedUser = await db.update(user).set({password: hash}).where(eq(user.id, req.params.id))
+        res.status(200).json(updatedUser)
     }catch(err){
         next(err)
     }
