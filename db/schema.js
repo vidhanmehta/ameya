@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { pgTable, serial, varchar, numeric, date, timestamp, pgEnum, integer, time, uuid} from "drizzle-orm/pg-core";
 
-export const gender = pgEnum("gender", ["Male","Female","Others"])
+export const gender = pgEnum("gender", ["Male","Female","Others","Prefer not to say"])
 export const hand = pgEnum("hand", ["Left","Right"])
 export const posture = pgEnum("posture", ["Full Body Weight", "Full Arm Weight", "Forward Loading", "Backward Off Loading", "Side Loading", "Side Off Loading", "sitting" ])
 export const assestmentType = pgEnum("assestmentType", ["Weekly", "Monthly", "Daily"])
