@@ -1,6 +1,6 @@
 import {test} from '../db/schema.js';
 import { db } from '../db/setup.js';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, and } from 'drizzle-orm';
 
 export const updateTest =async(req,res,next)=>{
     try{
