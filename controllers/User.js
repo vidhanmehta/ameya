@@ -2,6 +2,7 @@ import {user} from '../db/schema.js';
 import { db } from '../db/setup.js';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
+import { sendEmail } from '../utils/SendMail.js';
 
 export const updateUser =async(req,res,next)=>{
     try{
@@ -66,6 +67,22 @@ export const updateUserPassword = async(req,res,next)=>{
         const updatedUser = await db.update(user).set({password: hash}).where(eq(user.id, req.params.id))
         res.status(200).json(updatedUser)
     }catch(err){
+        next(err)
+    }
+}
+
+export const sendPasswordEmail = async(req,res,next)=>{
+    try{
+        const user = await db.query.user.findFirst({
+            where: (User, {eq}) => eq(User.email, req.body.email),
+        })
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }else{
+            sendEmail(user.email, "VITAL STEP - PASSWORD", user.name, user.password)
+            res.status(200).json("Email Sent")
+        }
+    }catch{
         next(err)
     }
 }
