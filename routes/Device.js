@@ -5,7 +5,7 @@ import { verifyToken } from '../utils/verifyToken.js'
 const router = express.Router()
 
 router.put('/:id',verifyToken, updateDevice)
-router.delete('/:id',verifyToken, deleteDevice)
+router.delete('/:id', deleteDevice)
 router.get('/:id', getDevice)
 router.get('/user/:id', getUserDevice)
 router.post('/',verifyToken, createDevice)

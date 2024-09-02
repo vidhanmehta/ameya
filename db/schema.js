@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { pgTable, serial, varchar, numeric, date, timestamp, pgEnum, integer, time, uuid} from "drizzle-orm/pg-core";
 
-export const gender = pgEnum("gender", ["Male","Female","Others","Prefer not to say"])
+export const gender = pgEnum("gender", ["Male","Female","Other","Prefer not to say"])
 export const hand = pgEnum("hand", ["Left","Right"])
 export const posture = pgEnum("posture", ["Full Body Weight", "Full Arm Weight", "Forward Loading", "Backward Off Loading", "Side Loading", "Side Off Loading", "sitting" ])
 export const assestmentType = pgEnum("assestmentType", ["Weekly", "Monthly", "Daily"])
@@ -11,10 +11,11 @@ export const status = pgEnum("status", ["Active", "Completed"])
 export const user = pgTable("user", {
     id: serial("id").primaryKey(),
     name: varchar("name", { length: 256 }).notNull(),
-    phone: numeric("phone").notNull().unique(),
+    countryCode: varchar("countryCode").notNull(),
+    phone: numeric("phone", {precision: 10, scale: 0}).notNull().unique(),
     email: varchar("email", { length: 256 }).unique().notNull(),
     password: varchar("password", {length: 256}).notNull(),
-    dob: date("dob").notNull(),
+    dob: date("dob").notNull(), 
     city: varchar("city", { length: 256 }),
     country: varchar("country", { length: 256}).default('India'),
     pincode: numeric("pincode"),

@@ -1,5 +1,5 @@
 import * as nodemailer from 'nodemailer';
-import * as handlebars from 'handlebars';
+import handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -14,12 +14,13 @@ export async function sendEmail(email, subject, un, ps) {
   };
   const htmlToSend = template(replacements);
   const transporter = nodemailer.createTransport({
-    host: "smtp.zoho.com",
-    port: 465, // 587
+    service: "Gmail",
+    host: "smtp.gmail.com",
+    port: 465,
     secure: true,
     auth: {
       user: "business@antrikshlabs.com",
-      pass: "479479479@pP"
+      pass: "zbnsbherrjbxhpxk"
     }
   });
   const mailOptions = {

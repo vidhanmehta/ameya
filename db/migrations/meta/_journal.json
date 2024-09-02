@@ -127,6 +127,13 @@
       "when": 1724876111025,
       "tag": "0017_great_next_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1725020314633,
+      "tag": "0018_harsh_shocker",
+      "breakpoints": true
     }
   ]
 }
