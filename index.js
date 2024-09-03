@@ -13,7 +13,6 @@ import UserRoute from './routes/User.js'
 import DeviceQueueRoute from './routes/DeviceQueue.js'
 import authRoute from './routes/Auth.js'
 import swaggerUi from 'swagger-ui-express'
-import swaggerDocument from "./docs/swagger.json" assert { type: "json" };
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -22,7 +21,6 @@ const PORT = 3005;
 
 app.use(express.json())
 app.use(cookieParser())
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const connect = async () => {
     try {
