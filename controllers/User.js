@@ -72,17 +72,24 @@ export const updateUserPassword = async(req,res,next)=>{
 }
 
 export const sendPasswordEmail = async(req,res,next)=>{
+    
+    const password = Math.random().toString(36).slice(-8);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
     try{
-        const user = await db.query.user.findFirst({
+        const user1 = await db.query.user.findFirst({
             where: (User, {eq}) => eq(User.email, req.body.email),
         })
-        if (!user) {
+        if (!user1) {
             return res.status(404).json({ message: "User not found" });
         }else{
-            sendEmail(user.email, "VITAL STEP - PASSWORD", user.name, user.password)
+            const updatedUser = await db.update(user).set({password: hash}).where(eq(user.id, user1.id)).returning()
+            console.log(updatedUser)
+            sendEmail(user1.email, "VITAL STEP - PASSWORD", user1.name, password)
             res.status(200).json("Email Sent")
         }
-    }catch{
+    }catch(err){
         next(err)
     }
 }
