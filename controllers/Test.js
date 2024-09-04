@@ -14,7 +14,8 @@ export const updateTest =async(req,res,next)=>{
 export const createTest = async(req,res,next)=>{
     try{
         const createdTest = await db.insert(test).values(req.body).returning()
-        res.status(200).json(createdTest)
+        const deletedTest = await db.delete(test).where(eq(test.assestmentId, req.body.assestmentId))
+        if(createTest) return res.status(200).json(createdTest)
     }catch(err){
         next(err)
     }

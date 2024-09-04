@@ -16,7 +16,7 @@ export const createDevice = async(req,res,next)=>{
     console.log("creating device", req.body)
     try{
         const createdDevice = await db.insert(device).values(req.body).returning()
-        const deletedQueue = await db.delete(DeviceQueue).where(eq(DeviceQueue.deviceCode, req.params.id))
+        const deletedQueue = await db.delete(DeviceQueue).where(eq(DeviceQueue.deviceCode, req.body.deviceCode))
         res.status(200).json(createdDevice)
     }catch(err){
         next(err)
