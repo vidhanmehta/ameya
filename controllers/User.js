@@ -86,7 +86,7 @@ export const sendPasswordEmail = async(req,res,next)=>{
         }else{
             const updatedUser = await db.update(user).set({password: hash}).where(eq(user.id, user1.id)).returning()
             console.log(updatedUser)
-            sendEmail(user1.email, "VITAL STEP - PASSWORD", user1.name, password)
+            await sendEmail(user1.email, "VITAL STEP - PASSWORD", user1.name, password)
             res.status(200).json("Email Sent")
         }
     }catch(err){
