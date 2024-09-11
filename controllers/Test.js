@@ -1,4 +1,4 @@
-import {test} from '../db/schema.js';
+import {queue, test} from '../db/schema.js';
 import { db } from '../db/setup.js';
 import { eq, desc, and } from 'drizzle-orm';
 
@@ -14,7 +14,7 @@ export const updateTest =async(req,res,next)=>{
 export const createTest = async(req,res,next)=>{
     try{
         const createdTest = await db.insert(test).values(req.body).returning()
-        const deletedTest = await db.delete(test).where(eq(test.assestmentId, req.body.assestmentId))
+        const deletedTestQueue = await db.delete(queue).where(eq(queue.assessmentId, req.body.assestmentId))
         if(createTest) return res.status(200).json(createdTest)
     }catch(err){
         next(err)
