@@ -61,3 +61,12 @@ export const getUserDevice = async(req,res,next)=>{
         next(err)
     }
 }
+
+export const getCodeDevice = async(req,res,next)=>{
+    try{
+        const getAllDevice = await db.select().from(device).where(eq(device.deviceCode, req.body.code))
+        res.status(200).json(getAllDevice[0])
+    }catch(err){
+        next(err)
+    }
+}

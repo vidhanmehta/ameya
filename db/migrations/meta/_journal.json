@@ -134,6 +134,13 @@
       "when": 1725020314633,
       "tag": "0018_harsh_shocker",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1726037021627,
+      "tag": "0019_supreme_microchip",
+      "breakpoints": true
     }
   ]
 }

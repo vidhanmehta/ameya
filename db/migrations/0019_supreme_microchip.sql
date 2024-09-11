@@ -1,0 +1,1 @@
+ALTER TABLE "assessment" DROP CONSTRAINT "assessment_userId_unique";

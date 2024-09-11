@@ -54,7 +54,7 @@ export const user = pgTable("user", {
 
   export const assessment = pgTable("assessment",{
     id: serial("id").primaryKey(),
-    userId: integer("userId").notNull().references(() => user.id, {onDelete: "cascade"}).unique(),
+    userId: integer("userId").notNull().references(() => user.id, {onDelete: "cascade"}),
     deviceId: integer("deviceId").notNull().references(() => device.id),
     posture: posture("posture").notNull(),
     type: assestmentType("type").notNull(),
