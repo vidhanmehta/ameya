@@ -141,6 +141,13 @@
       "when": 1726037021627,
       "tag": "0019_supreme_microchip",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1726410350032,
+      "tag": "0020_cute_wrecking_crew",
+      "breakpoints": true
     }
   ]
 }
