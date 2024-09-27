@@ -28,9 +28,11 @@ export const getSpecialist = async (req,res,next)=>{
         const gotSpecialist = await db.query.Specialist.findFirst({
             where: (Specialist, {eq}) => eq(Specialist.id, req.params.id),
             with: {
-                device: true,
-                assessment: true,
-                accounts: true
+                accounts: {
+                    with: {
+                        user: true
+                    }
+                }
             }
         })
 

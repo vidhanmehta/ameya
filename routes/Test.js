@@ -1,6 +1,6 @@
 import express from 'express'
 import { createTest, deleteTest, getAllAssesmentTest, getAllUserTest, getHandTest, getTest, updateTest } from '../controllers/Test.js'
-import { verifyDoctorOperator, verifyToken } from '../utils/verifyToken.js'
+import { verifyToken } from '../utils/verifyToken.js'
 
 const router = express.Router()
 

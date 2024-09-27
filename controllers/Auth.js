@@ -33,7 +33,7 @@ export const getUser = async (req, res, next) => {
             with: {
                 device: true,
                 assessment: true,
-                accountsAccess: true
+                accounts: true
             }
         });
         console.log(getUser)
@@ -83,7 +83,7 @@ export const getSpecialist = async (req, res, next) => {
        const getSpecialist = await db.query.Specialist.findFirst({
            where: eq(Specialist.email, req.body.email),
            with: {
-               accountsAccess: true
+               accounts: true
            }
        });
        console.log(getSpecialist)

@@ -1,5 +1,5 @@
 import express from 'express'
-import { createSpecialistQueue, deleteSpecialistQueue, updateSpecialistQueue, getSpecialistQueue, getAllSpecialistQueue} from '../controllers/DeviceSpecialistQueue.js'
+import { createSpecialistQueue, deleteSpecialistQueue, updateSpecialistQueue, getSpecialistQueue, getAllSpecialistQueue} from '../controllers/SpecialistQueue.js'
 
 const router = express.Router()
 
