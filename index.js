@@ -7,13 +7,13 @@ import DeviceRoute from './routes/Device.js';
 import QueueRoute from './routes/Queue.js';
 import AssesmentRoute from './routes/Assesment.js';
 import RemarksRoute from './routes/Remarks.js'
-import ReminderRoute from './routes/Reminder.js'
 import AccountAccessRoute from './routes/AccountAccess.js'
 import UserRoute from './routes/User.js'
 import DeviceQueueRoute from './routes/DeviceQueue.js'
 import authRoute from './routes/Auth.js'
-import swaggerUi from 'swagger-ui-express'
 import cookieParser from 'cookie-parser';
+import SpecialistRoute from './routes/Specialist.js'
+import SpecialistQueueRoute from './routes/SpecialistQueue.js'
 
 const app = express();
 dotenv.config();
@@ -51,12 +51,13 @@ app.use('/api/assessment', AssesmentRoute)
 app.use('/api/device', DeviceRoute)
 app.use('/api/queue', QueueRoute)
 app.use('/api/remarks', RemarksRoute)
-app.use('/api/reminder', ReminderRoute)
 app.use('/api/accountAccess', AccountAccessRoute)
 app.use('/api/test', TestRoute)
 app.use('/api/user', UserRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/device-queue/', DeviceQueueRoute)
+app.use('/api/specialist', SpecialistRoute)
+app.use('/api/specialist-queue', SpecialistQueueRoute)
 
 app.listen(PORT, (error) => {
     if (!error) {

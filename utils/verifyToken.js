@@ -23,39 +23,9 @@ export const verifyUser = (req,res,next)=>{
     })
 }
 
-export const verifyAdmin = (req,res,next)=>{
+export const verifySpecialist = (req,res,next)=>{
     verifyToken(req,res,next,()=>{
-        if(req.user.role == "Admin"){
-            next()
-        }else{
-            return next(createError('404',"You're not Admin"))
-        }
-    })
-}
-
-export const verifyOperator = (req,res,next)=>{
-    verifyToken(req,res,next,()=>{
-        if(req.user.role == "Operator"){
-            next()
-        }else{
-            return next(createError('404',"You're not Operator"))
-        }
-    })
-}
-
-export const verifyDoctor = (req,res,next)=>{
-    verifyToken(req,res,next,()=>{
-        if(req.user.role == "Doctor"){
-            next()
-        }else{
-            return next(createError('404',"You're not Doctor"))
-        }
-    })
-}
-
-export const verifyDoctorOperator = (req,res,next)=>{
-    verifyToken(req,res,next,()=>{
-        if(req.user.role == "Doctor" || "Operator"){
+        if(req.Specialist.id === req.params.id || req.Specialist.isAdmin){
             next()
         }else{
             return next(createError('404',"You're not Doctor or Operator"))

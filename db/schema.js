@@ -1,11 +1,10 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, varchar, numeric, date, timestamp, pgEnum, integer, time, uuid} from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, numeric, date, timestamp, pgEnum, integer, time, uuid, primaryKey} from "drizzle-orm/pg-core";
 
 export const gender = pgEnum("gender", ["Male","Female","Prefer not to say"])
 export const hand = pgEnum("hand", ["Left","Right"])
 export const posture = pgEnum("posture", ["Full Body Weight", "Full Arm Weight", "Forward Loading", "Backward Off Loading", "Side Loading", "Side Off Loading", "sitting" ])
 export const assestmentType = pgEnum("assestmentType", ["Weekly", "Monthly", "Daily"])
-export const roleType = pgEnum("roleType", ["Admin", "User", "Doctor", "Operator"])
 export const status = pgEnum("status", ["Active", "Completed"])
 
 export const user = pgTable("user", {
@@ -28,7 +27,6 @@ export const user = pgTable("user", {
     dominant_hand: hand("dominant_hand").notNull(),
     gender: gender("gender").notNull(),
     accessCode: uuid("accessCode").defaultRandom(),
-    role: roleType('role').default("User"),
     createdAt: timestamp("createdAt").defaultNow(),
     // assessment
     // role
@@ -61,15 +59,6 @@ export const user = pgTable("user", {
     createdAt: timestamp("createdAt").defaultNow(),
   })
 
-  export const reminder = pgTable("reminder",{
-    id: serial("id").primaryKey(),
-    userId: integer("userId").notNull().references(() => user.id),
-    assessmentId: integer("assessmentId").notNull().references(() => assessment.id, {onDelete: "cascade"}),
-    date: date("date").notNull(),
-    time: time("time").notNull(),
-    createdAt: timestamp("createdAt").defaultNow(),
-  })
-
   export const test = pgTable("test",{
     id: serial("id").primaryKey(),
     userId: integer("userId").notNull().references(() => user.id, {onDelete: "cascade"}),
@@ -94,24 +83,61 @@ export const user = pgTable("user", {
   })
 
 
-  export const accountAccess = pgTable("accountAccess", {
-    id: serial("id").primaryKey(),
-    userId: integer("userId").notNull().references(() => user.id, {onDelete: "cascade"}),
-    accountId: integer("accountId").notNull().references(() => user.id), 
-    createdAt: timestamp("createdAt").defaultNow(),
-  })
-
   export const DeviceQueue = pgTable("deviceQueue", {
     id: serial("id").primaryKey(),
     deviceCode: uuid("accessCode").defaultRandom(),
   })
 
+  export const Specialist = pgTable("specialist", {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 256 }).notNull(),
+    countryCode: varchar("countryCode").notNull(),
+    phone: numeric("phone", {precision: 10, scale: 0}).notNull().unique(),
+    email: varchar("email", { length: 256 }).unique().notNull(),
+    password: varchar("password", {length: 256}).notNull(),
+    dob: date("dob").notNull(), 
+    city: varchar("city", { length: 256 }),
+    country: varchar("country", { length: 256}).default('India'),
+    pincode: numeric("pincode"),
+    createdAt: timestamp("createdAt").defaultNow(),
+  })
+
+  export const SpecialistQueue = pgTable("specialistQueue", {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 256 }).notNull(),
+    countryCode: varchar("countryCode").notNull(),
+    phone: numeric("phone", {precision: 10, scale: 0}).notNull().unique(),
+    email: varchar("email", { length: 256 }).unique().notNull(),
+    password: varchar("password", {length: 256}).notNull(),
+    dob: date("dob").notNull(), 
+    city: varchar("city", { length: 256 }),
+    country: varchar("country", { length: 256}).default('India'),
+    pincode: numeric("pincode"),
+    createdAt: timestamp("createdAt").defaultNow(),
+  })
+
+  export const accountAccess = pgTable("accountAccess",{
+    id: serial("id").primaryKey(),
+    userId: integer('userId').notNull().references(()=>user.id, {onDelete: "cascade"}),
+    specialistId: integer('specialistId').notNull().references(()=>Specialist.id, {onDelete: "cascade"})
+  }
+  )
+
   export const userRelations = relations(user, ({one, many}) => ({
     device: many(device),
     assessment: many(assessment),
-    accounts: many(accountAccess, {
-      relationName: "accounts"
-    })
+    accounts: many(accountAccess)
+  }))
+
+  export const accountAccessRelations = relations(accountAccess, ({one}) => ({
+    user: one(user, {
+      fields: [accountAccess.userId],
+      references: [user.id],
+    }),
+    specialist: one(Specialist, {
+      fields: [accountAccess.specialistId],
+      references: [Specialist.id],
+    }),
   }))
 
   export const assessmentRelations = relations(assessment, ({one, many}) => ({
@@ -120,7 +146,6 @@ export const user = pgTable("user", {
       references: [user.id],
     }),
     test: many(test),
-    reminder: many(reminder),
     remarks: many(remarks),
     queue: one(queue, {
       fields: [assessment.id],
@@ -135,12 +160,6 @@ export const user = pgTable("user", {
     }),
   }))
 
-  export const reminderRelations = relations(reminder, ({one, many}) => ({
-    assessment: one(assessment, {
-      fields: [reminder.assessmentId],
-      references: [assessment.id],
-    }),
-  }))
 
   export const deviceRelations = relations(device, ({one, many}) => ({
     user: one(user, {
@@ -149,16 +168,9 @@ export const user = pgTable("user", {
     }),
   }))
 
-  export const accountRelations = relations( accountAccess, ({one, many}) => ({
-    acc_connect: one(user, {
-      fields: [accountAccess.accountId],
-      references: [user.id]
-    }),
-    accounts: one(user, {
-      fields: [accountAccess.userId],
-      references: [user.id],
-      relationName: "accounts"
-    })
+
+  export const specialistRelations = relations(Specialist, ({one, many}) => ({
+    accounts: many(accountAccess)
   }))
 
   export const remarksRelations = relations(remarks, ({one, many}) => ({

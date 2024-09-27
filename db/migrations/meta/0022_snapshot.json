@@ -1,0 +1,875 @@
+{
+  "id": "c6c5824d-8dc8-4717-a36b-4d7435b76be5",
+  "prevId": "f4653f7b-d816-4091-858d-2b9953d2306a",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.deviceQueue": {
+      "name": "deviceQueue",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "accessCode": {
+          "name": "accessCode",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "gen_random_uuid()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.specialist": {
+      "name": "specialist",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "countryCode": {
+          "name": "countryCode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "numeric(10, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dob": {
+          "name": "dob",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'India'"
+        },
+        "pincode": {
+          "name": "pincode",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "specialist_phone_unique": {
+          "name": "specialist_phone_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phone"
+          ]
+        },
+        "specialist_email_unique": {
+          "name": "specialist_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    },
+    "public.specialistQueue": {
+      "name": "specialistQueue",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "countryCode": {
+          "name": "countryCode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "numeric(10, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dob": {
+          "name": "dob",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'India'"
+        },
+        "pincode": {
+          "name": "pincode",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "specialistQueue_phone_unique": {
+          "name": "specialistQueue_phone_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phone"
+          ]
+        },
+        "specialistQueue_email_unique": {
+          "name": "specialistQueue_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    },
+    "public.accountAccess": {
+      "name": "accountAccess",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "specialistId": {
+          "name": "specialistId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "accountAccess_userId_user_id_fk": {
+          "name": "accountAccess_userId_user_id_fk",
+          "tableFrom": "accountAccess",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "accountAccess_specialistId_specialist_id_fk": {
+          "name": "accountAccess_specialistId_specialist_id_fk",
+          "tableFrom": "accountAccess",
+          "tableTo": "specialist",
+          "columnsFrom": [
+            "specialistId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.assessment": {
+      "name": "assessment",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "posture": {
+          "name": "posture",
+          "type": "posture",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "assestmentType",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Active'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "assessment_userId_user_id_fk": {
+          "name": "assessment_userId_user_id_fk",
+          "tableFrom": "assessment",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.device": {
+      "name": "device",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deviceName": {
+          "name": "deviceName",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deviceCode": {
+          "name": "deviceCode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "device_userId_user_id_fk": {
+          "name": "device_userId_user_id_fk",
+          "tableFrom": "device",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "device_deviceCode_unique": {
+          "name": "device_deviceCode_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "deviceCode"
+          ]
+        }
+      }
+    },
+    "public.queue": {
+      "name": "queue",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deviceId": {
+          "name": "deviceId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assessmentId": {
+          "name": "assessmentId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "posture": {
+          "name": "posture",
+          "type": "posture",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hand": {
+          "name": "hand",
+          "type": "hand",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "queue_userId_user_id_fk": {
+          "name": "queue_userId_user_id_fk",
+          "tableFrom": "queue",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "queue_deviceId_device_id_fk": {
+          "name": "queue_deviceId_device_id_fk",
+          "tableFrom": "queue",
+          "tableTo": "device",
+          "columnsFrom": [
+            "deviceId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "queue_assessmentId_assessment_id_fk": {
+          "name": "queue_assessmentId_assessment_id_fk",
+          "tableFrom": "queue",
+          "tableTo": "assessment",
+          "columnsFrom": [
+            "assessmentId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.remarks": {
+      "name": "remarks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "assessmentId": {
+          "name": "assessmentId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "AssignerId": {
+          "name": "AssignerId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "remarks": {
+          "name": "remarks",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "remarks_assessmentId_assessment_id_fk": {
+          "name": "remarks_assessmentId_assessment_id_fk",
+          "tableFrom": "remarks",
+          "tableTo": "assessment",
+          "columnsFrom": [
+            "assessmentId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "remarks_AssignerId_user_id_fk": {
+          "name": "remarks_AssignerId_user_id_fk",
+          "tableFrom": "remarks",
+          "tableTo": "user",
+          "columnsFrom": [
+            "AssignerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.test": {
+      "name": "test",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deviceId": {
+          "name": "deviceId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assestmentId": {
+          "name": "assestmentId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "posture": {
+          "name": "posture",
+          "type": "posture",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "trial1": {
+          "name": "trial1",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "trial2": {
+          "name": "trial2",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "trial3": {
+          "name": "trial3",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hand": {
+          "name": "hand",
+          "type": "hand",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "test_userId_user_id_fk": {
+          "name": "test_userId_user_id_fk",
+          "tableFrom": "test",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "test_deviceId_device_id_fk": {
+          "name": "test_deviceId_device_id_fk",
+          "tableFrom": "test",
+          "tableTo": "device",
+          "columnsFrom": [
+            "deviceId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "test_assestmentId_assessment_id_fk": {
+          "name": "test_assestmentId_assessment_id_fk",
+          "tableFrom": "test",
+          "tableTo": "assessment",
+          "columnsFrom": [
+            "assestmentId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "countryCode": {
+          "name": "countryCode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "numeric(10, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dob": {
+          "name": "dob",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'India'"
+        },
+        "pincode": {
+          "name": "pincode",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "weight": {
+          "name": "weight",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "height": {
+          "name": "height",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plam_length": {
+          "name": "plam_length",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "palm_width": {
+          "name": "palm_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "knuckles_length": {
+          "name": "knuckles_length",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dominant_hand": {
+          "name": "dominant_hand",
+          "type": "hand",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gender": {
+          "name": "gender",
+          "type": "gender",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accessCode": {
+          "name": "accessCode",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "gen_random_uuid()"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "user_phone_unique": {
+          "name": "user_phone_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phone"
+          ]
+        },
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    }
+  },
+  "enums": {
+    "public.assestmentType": {
+      "name": "assestmentType",
+      "schema": "public",
+      "values": [
+        "Weekly",
+        "Monthly",
+        "Daily"
+      ]
+    },
+    "public.gender": {
+      "name": "gender",
+      "schema": "public",
+      "values": [
+        "Male",
+        "Female",
+        "Prefer not to say"
+      ]
+    },
+    "public.hand": {
+      "name": "hand",
+      "schema": "public",
+      "values": [
+        "Left",
+        "Right"
+      ]
+    },
+    "public.posture": {
+      "name": "posture",
+      "schema": "public",
+      "values": [
+        "Full Body Weight",
+        "Full Arm Weight",
+        "Forward Loading",
+        "Backward Off Loading",
+        "Side Loading",
+        "Side Off Loading",
+        "sitting"
+      ]
+    },
+    "public.status": {
+      "name": "status",
+      "schema": "public",
+      "values": [
+        "Active",
+        "Completed"
+      ]
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -1,0 +1,1 @@
+ALTER TABLE "accountAccess" DROP CONSTRAINT "accountAccess_userId_specialistId_pk";

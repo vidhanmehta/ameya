@@ -1,0 +1,1 @@
+ALTER TABLE "accountAccess" ADD COLUMN "id" serial NOT NULL;

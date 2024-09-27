@@ -1,4 +1,4 @@
-import { user } from '../db/schema.js';
+import { Specialist, user } from '../db/schema.js';
 import { db } from '../db/setup.js';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
@@ -33,11 +33,7 @@ export const getUser = async (req, res, next) => {
             with: {
                 device: true,
                 assessment: true,
-                accounts: {
-                    with: {
-                        acc_connect: true
-                    }
-                },
+                accountsAccess: true
             }
         });
         console.log(getUser)
@@ -47,10 +43,10 @@ export const getUser = async (req, res, next) => {
         const isPasswordCorrect = await bcrypt.compare(req.body.password, getUser.password);
         if (!isPasswordCorrect) return next(createError(400, 'Incorrect Password'));
 
-        const token = jwt.sign({ id: getUser.id, role: getUser.role }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: getUser.id }, process.env.JWT_SECRET);
         console.log(token)
 
-        const { password, role, ...other } = getUser;
+        const { password, ...other } = getUser;
 
         res.cookie('access_token', token, {
             httpOnly: true
@@ -59,4 +55,54 @@ export const getUser = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+
+export const createSpecialist = async (req, res, next) => {
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password, salt);
+
+    try {
+        const newSpecialist = await db.insert(Specialist).values({
+            ...req.body,
+            password: hash
+        }).returning();
+        res.status(200).json(newSpecialist);
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const getSpecialist = async (req, res, next) => {
+
+    /* #swagger.security = [{
+           "bearerAuth": []
+   }] */
+
+   try {
+       const getSpecialist = await db.query.Specialist.findFirst({
+           where: eq(Specialist.email, req.body.email),
+           with: {
+               accountsAccess: true
+           }
+       });
+       console.log(getSpecialist)
+
+       if (!getSpecialist) return next(createError(404, 'No User found'));
+
+       const isPasswordCorrect = await bcrypt.compare(req.body.password, getSpecialist.password);
+       if (!isPasswordCorrect) return next(createError(400, 'Incorrect Password'));
+
+       const token = jwt.sign({ id: getSpecialist.id }, process.env.JWT_SECRET);
+       console.log(token)
+
+       const { password, ...other } = getSpecialist;
+
+       res.cookie('access_token', token, {
+           httpOnly: true
+       }).status(200).json({ ...other });
+
+   } catch (err) {
+       next(err);
+   }
 };

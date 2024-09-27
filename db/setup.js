@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
-import { assessment, assessmentRelations, device, deviceRelations, remarks, remarksRelations, reminder, reminderRelations, accountAccess, test, testRelations, user, userRelations, accountRelations, queueRelations } from './schema.js';
+import { assessment, assessmentRelations, device, deviceRelations, remarks, remarksRelations, accountAccess, test, testRelations, user, userRelations, queueRelations, Specialist, SpecialistQueue, specialistRelations, accountAccessRelations } from './schema.js';
 
 dotenv.config();
 
@@ -16,19 +16,20 @@ if (!process.env.DATABASE_URL) {
     export const db = drizzle(client, {
         schema: {
             user,
-            accountAccess,
             assessment,
             test,
             device, 
-            reminder,
+            Specialist,
+            SpecialistQueue,
+            accountAccess,
             remarks,
             userRelations,
             assessmentRelations,
+            specialistRelations,
             testRelations, 
             deviceRelations,
-            reminderRelations,
             remarksRelations,
-            accountRelations,
+            accountAccessRelations,
             queueRelations
         }
     });
