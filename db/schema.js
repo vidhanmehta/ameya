@@ -99,6 +99,7 @@ export const user = pgTable("user", {
     city: varchar("city", { length: 256 }),
     country: varchar("country", { length: 256}).default('India'),
     pincode: numeric("pincode"),
+    address: varchar("address", { length: 256 }),
     createdAt: timestamp("createdAt").defaultNow(),
   })
 
@@ -113,6 +114,7 @@ export const user = pgTable("user", {
     city: varchar("city", { length: 256 }),
     country: varchar("country", { length: 256}).default('India'),
     pincode: numeric("pincode"),
+    address: varchar("address", { length: 256 }),
     createdAt: timestamp("createdAt").defaultNow(),
   })
 
