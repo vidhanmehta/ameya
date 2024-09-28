@@ -169,6 +169,13 @@
       "when": 1727454529468,
       "tag": "0023_pink_toro",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1727526098771,
+      "tag": "0024_noisy_pestilence",
+      "breakpoints": true
     }
   ]
 }

@@ -37,7 +37,7 @@ export const user = pgTable("user", {
   export const remarks = pgTable("remarks",{
     id: serial("id").primaryKey(),
     assessmentId: integer("assessmentId").notNull().references(() => assessment.id, {onDelete: "cascade"}),
-    AssignerId: integer("AssignerId").notNull().references(() => user.id, {onDelete: "cascade"}),
+    AssignerId: integer("AssignerId").notNull().references(() => Specialist.id, {onDelete: "cascade"}),
     remarks: varchar("remarks", { length: 256 }).notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
   })
