@@ -30,8 +30,7 @@ export const getUser = async (req,res,next)=>{
             with: {
                 device: true,
                 assessment: true,
-                accounts: true,
-                },
+                accounts: true
             }
         })
 
