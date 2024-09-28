@@ -30,10 +30,7 @@ export const getUser = async (req,res,next)=>{
             with: {
                 device: true,
                 assessment: true,
-                accounts: {
-                    with: {
-                        acc_connect: true
-                    }
+                accounts: true,
                 },
             }
         })
