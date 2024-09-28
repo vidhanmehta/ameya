@@ -177,7 +177,7 @@ export const user = pgTable("user", {
 
   export const remarksRelations = relations(remarks, ({one, many}) => ({
     assessment: one(assessment, {
-      fields: [remarks.userId],
+      fields: [remarks.assessmentId],
       references: [user.id],
     }),
   }))
