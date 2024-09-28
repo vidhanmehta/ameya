@@ -35,7 +35,8 @@ export const getAssesment = async (req,res,next)=>{
         const gotAssesment = await db.query.assessment.findFirst({
             where: (Assesment, {eq}) => eq(Assesment.id, req.params.id),
             with: {
-y
+                user: true,
+                test: true,
                 remarks: true
             }
         })
