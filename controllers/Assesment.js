@@ -37,7 +37,6 @@ export const getAssesment = async (req,res,next)=>{
             with: {
                 user: true,
                 test: true,
-                reminder: true,
                 remarks: true
             }
         })
