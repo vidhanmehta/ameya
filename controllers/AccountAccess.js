@@ -52,7 +52,27 @@ export const getAccountAccess = async (req,res,next)=>{
 
 export const getUserAccountAccess = async(req,res,next)=>{
     try{
-        const getAllAccountAccess = await db.select().from(accountAccess).where(eq(accountAccess.userId, req.params.id))
+        const getAllAccountAccess = await  db.query.accountAccess.findMany({
+            where: (accountAccess, {eq}) => eq(accountAccess.userId, req.params.id),
+            with: {
+                user: true
+            }
+        })
+        // const getAllAccountAccess = await db.select().from(accountAccess).where(eq(accountAccess.userId, req.params.id))
+        res.status(200).json(getAllAccountAccess)
+    }catch(err){
+        next(err)
+    }
+}
+
+export const getSpecialistAccountAccess = async(req,res,next)=>{
+    try{
+        const getAllAccountAccess = await db.query.accountAccess.findMany({
+            where: (accountAccess, {eq}) => eq(accountAccess.specialistId, req.params.id),
+            with: {
+                user: true
+            }
+        })
         res.status(200).json(getAllAccountAccess)
     }catch(err){
         next(err)
