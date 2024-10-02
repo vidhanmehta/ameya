@@ -1,4 +1,4 @@
-import {accountAccess} from '../db/schema.js';
+import {accountAccess, user} from '../db/schema.js';
 import { db } from '../db/setup.js';
 import { eq } from 'drizzle-orm';
 
@@ -13,8 +13,15 @@ export const updateAccountAccess =async(req,res,next)=>{
 
 export const createAccountAccess = async(req,res,next)=>{
     try{
-        const createdAccountAccess = await db.insert(accountAccess).values(req.body).returning()
-        res.status(200).json(createdAccountAccess)
+        const IsUser = await db.select().from(user).where(eq(user.email, req.body.email))
+        if(IsUser.length == 0){
+            res.status(404).json('User not found')
+        }else if(IsUser[0].accessCode !== req.body.accessCode){
+            res.status(500).json('Invalid Access Code')   
+        }else{
+            const createdAccountAccess = await db.insert(accountAccess).values(req.body).returning()
+            res.status(200).json(createdAccountAccess)
+        }
     }catch(err){
         next(err)
     }
