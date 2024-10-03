@@ -19,7 +19,10 @@ export const createAccountAccess = async(req,res,next)=>{
         }else if(IsUser[0].accessCode !== req.body.accessCode){
             res.status(500).json('Invalid Access Code')   
         }else{
-            const createdAccountAccess = await db.insert(accountAccess).values(req.body).returning()
+            const createdAccountAccess = await db.insert(accountAccess).values({
+                "userId":IsUser.id,
+                "specialistId":req.body.specialistId
+            }).returning()
             res.status(200).json(createdAccountAccess)
         }
     }catch(err){
