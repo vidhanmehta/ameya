@@ -20,7 +20,7 @@ export const createAccountAccess = async(req,res,next)=>{
             res.status(500).json('Invalid Access Code')   
         }else{
             const createdAccountAccess = await db.insert(accountAccess).values({
-                "userId":IsUser.id,
+                "userId":IsUser[0].id,
                 "specialistId":req.body.specialistId
             }).returning()
             res.status(200).json(createdAccountAccess)
