@@ -1,4 +1,4 @@
-import { Specialist, user } from '../db/schema.js';
+import { Specialist, SpecialistQueue, user } from '../db/schema.js';
 import { db } from '../db/setup.js';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
@@ -80,29 +80,38 @@ export const getSpecialist = async (req, res, next) => {
    }] */
 
    try {
-       const getSpecialist = await db.query.Specialist.findFirst({
-           where: eq(Specialist.email, req.body.email),
-           with: {
-               accounts: true
-           }
-       });
-       console.log(getSpecialist)
 
-       if (!getSpecialist) return next(createError(404, 'No User found'));
+        const isSpecialistQueue = await db.select().from(SpecialistQueue).where(eq(SpecialistQueue.email, req.body.email))
+        if(!isSpecialistQueue.length){
 
-       const isPasswordCorrect = await bcrypt.compare(req.body.password, getSpecialist.password);
-       if (!isPasswordCorrect) return next(createError(400, 'Incorrect Password'));
-
-       const token = jwt.sign({ id: getSpecialist.id }, process.env.JWT_SECRET);
-       console.log(token)
-
-       const { password, ...other } = getSpecialist;
-
-       res.cookie('access_token', token, {
-           httpOnly: true
-       }).status(200).json({ ...other });
-
-   } catch (err) {
+            const getSpecialist = await db.query.Specialist.findFirst({
+                where: eq(Specialist.email, req.body.email),
+                with: {
+                    accounts: true
+                }
+            });
+            console.log(getSpecialist)
+    
+            if (!getSpecialist) return next(createError(404, 'No User found'));
+    
+            const isPasswordCorrect = await bcrypt.compare(req.body.password, getSpecialist.password);
+            if (!isPasswordCorrect) return next(createError(400, 'Incorrect Password'));
+    
+            const token = jwt.sign({ id: getSpecialist.id }, process.env.JWT_SECRET);
+            console.log(token)
+    
+            const { password, ...other } = getSpecialist;
+    
+            res.cookie('access_token', token, {
+                httpOnly: true
+            }).status(200).json({ ...other });
+        
+        }else{
+            res.status(400).json({
+                "message": "Specialist is not approved yet"
+            })
+        }
+        } catch (err) {
        next(err);
    }
 };
