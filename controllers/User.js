@@ -68,6 +68,8 @@ export const updateUserPassword = async(req,res,next)=>{
 }
 
 export const sendPasswordEmail = async(req,res,next)=>{
+
+    console.log("recieved email for password reset")
     
     const password = Math.random().toString(36).slice(-8);
     const salt = bcrypt.genSaltSync(10);
