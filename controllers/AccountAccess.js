@@ -45,7 +45,8 @@ export const getAccountAccess = async (req,res,next)=>{
         const gotAccountAccess = await db.query.accountAccess.findFirst({
             where: (AccountAccess, {eq}) => eq(AccountAccess.id, req.params.id),
             with: {
-                user: true
+                user: true,
+                specialist: true
             }
         })
 
@@ -65,7 +66,8 @@ export const getUserAccountAccess = async(req,res,next)=>{
         const getAllAccountAccess = await  db.query.accountAccess.findMany({
             where: (accountAccess, {eq}) => eq(accountAccess.userId, req.params.id),
             with: {
-                user: true
+                user: true,
+                specialist: true
             }
         })
         // const getAllAccountAccess = await db.select().from(accountAccess).where(eq(accountAccess.userId, req.params.id))
@@ -80,7 +82,8 @@ export const getSpecialistAccountAccess = async(req,res,next)=>{
         const getAllAccountAccess = await db.query.accountAccess.findMany({
             where: (accountAccess, {eq}) => eq(accountAccess.specialistId, req.params.id),
             with: {
-                user: true
+                user: true,
+                specialist: true
             }
         })
         res.status(200).json(getAllAccountAccess)
