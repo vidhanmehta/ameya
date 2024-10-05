@@ -107,7 +107,7 @@ export const getSpecialist = async (req, res, next) => {
             }).status(200).json({ ...other });
         
         }else{
-            res.status(400).json({
+            res.status(401).json({
                 "message": "Specialist is not approved yet"
             })
         }
