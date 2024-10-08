@@ -17,7 +17,7 @@ import SpecialistQueueRoute from './routes/SpecialistQueue.js'
 
 const app = express();
 dotenv.config();
-const PORT = 3005;
+const PORT = process.env.PORT || 3005;
 
 app.use(express.json())
 app.use(cookieParser())
