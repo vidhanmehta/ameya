@@ -22,7 +22,7 @@ export const createQueue = async(req,res,next)=>{
 
 export const deleteQueue = async(req,res,next)=>{
     try{
-        const deletedQueue = await db.delete(queue).where(eq(queue.deviceId, req.params.id))
+        const deletedQueue = await db.delete(queue).where(eq(queue.id, req.params.id))
         res.status(200).json('Deleted Queue')
     }catch(err){
         next(err)
